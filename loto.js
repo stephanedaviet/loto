@@ -17,11 +17,6 @@ for (let i = 0; i < 3; i++) {
     grid[i] = new Array(9);
     // 5 nombres par ligne
     let dizainesDispos = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-    for (let j = 0; j < 9; j++) {
-        if (dizainesCount[j] == 0) {
-            dizainesDispos.splice(j);
-        }
-    }
     if (i == 2) {
         // Pas de colonne vide
         const dizainesVides = [];
@@ -36,6 +31,8 @@ for (let i = 0; i < 3; i++) {
         const lastLineDizainesDispos = []
         while (lastLineDizainesDispos.length < 5) {
             if (dizainesVides.length > 0) {
+                const indexDizaine = dizainesDispos.indexOf(dizainesVides[0]);
+                dizainesDispos.splice(indexDizaine, 1);
                 lastLineDizainesDispos.push(dizainesVides.splice(0, 1)[0]);
             } else {
                 const indexDizaine = Math.floor(Math.random() * dizainesDispos.length);
@@ -74,6 +71,9 @@ for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 9; j++) {
         const cellule = document.createElement('div');
         cellule.setAttribute("class", "cell");
+        if (!grid[i][j]) {
+            cellule.setAttribute("class", "cell empty");
+        }
         const nombreText = document.createTextNode(grid[i][j] ? grid[i][j] : '');
         cellule.appendChild(nombreText);
         gridElement.appendChild(cellule);
